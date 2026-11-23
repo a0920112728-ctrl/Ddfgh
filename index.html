@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>承攬商工具箱會議暨每日進廠危害告知紀錄表</title>
+
+<style>
+:root {
+  --blue: #0b4f8a;
+  --light-blue: #eaf4fc;
+  --line: #333;
+  --bg: #f3f6f8;
+  --danger: #a82424;
+  --warn: #b45309;
+  --ok: #15803d;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  overscroll-behavior: none;
+}
+
+body {
+  margin: 0;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  background: var(--bg);
+  color: #111;
+  font-family: "Microsoft JhengHei", "PingFang TC", Arial, sans-serif;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+.page {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 16px;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, .12);
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+.company {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+h1 {
+  margin: 5px 0 18px;
+  text-align: center;
+  font-size: 22px;
+}
+
+h2 {
+  margin: 24px 0 10px;
+  padding: 8px 10px;
+  color: #fff;
+  background: var(--blue);
+  font-size: 16px;
+}
+
+h3 {
+  margin: 14px 0 8px;
+  font-size: 15px;
+}
+
+.note {
+  margin: 8px 0;
+  color: #555;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.warning {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #d97706;
+  border-left: 6px solid #d97706;
+  background: #fffbeb;
+  color: #7c2d12;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+  padding: 12px;
+  background: #fff;
+  border: 1px solid #c8d1d8;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
+}
+
+button {
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--blue);
+  color: #fff;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+  opacity: .88;
+}
+
+button.danger {
+  background: var(--danger);
+}
+
+button.secondary {
+  background: #56636e;
+}
+
+button.lock {
+  background: var(--warn);
+}
+
+button.unlock {
+  background: var(--ok);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 12px;
+}
+
+th,
+td {
+  padding: 8px;
+  border: 1px solid var(--line);
+  vertical-align: top;
+}
+
+th {
+  width: 150px;
+  background: var(--light-blue);
+  text-align: left;
+  white-space: nowrap;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"],
+input[type="number"],
+textarea,
+input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #9da8b0;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 16px;
+  background: #fff;
+}
+
+textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  padding: 4px 0;
+}
+
+.options label,
+.confirm-item {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 6px;
+  line-height: 1.5;
+}
+
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  accent-color: var(--blue);
+}
+
+.notice-box {
+  padding: 12px;
+  border: 1px solid #888;
+  background: #fcfcfc;
+  line-height: 1.7;
+}
+
+.notice-box ol {
+  margin: 5px 0 0;
+  padding-left: 24px;
+}
+
+.signature-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.signature-card {
+  overflow: hidden;
+  border: 1px solid #333;
+  break-inside: avoid;
+}
+
+.signature-card.locked {
+  border-color: var(--warn);
+  background: #fff7ed;
+}
+
+.signature-title {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px;
+  background: var(--light-blue);
+  border-bottom: 1px solid #333;
+  font-weight: 700;
+}
+
+.signature-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1200 / 360;
+  background: #fff;
+  cursor: crosshair;
+  touch-action: none;
+  -ms-touch-action: none;
+}
+
+.signature-card.locked .signature-canvas {
+  background: #f8fafc;
+  cursor: not-allowed;
+}
+
+.signature-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+  padding: 8px;
+  border-top: 1px solid #ddd;
+}
+
+.signature-actions button {
+  padding: 8px 10px;
+  font-size: 14px;
+  background: #666;
+}
+
+.signature-status {
+  padding: 4px 8px;
+  font-size: 13px;
+  color: #555;
+  text-align: right;
+}
+
+.pdf-upload {
+  margin-top: 24px;
+}
+
+.footer {
+  margin-top: 20px;
+  color: #555;
+  font-size: 13px;
+  text-align: center;
+}
+
+@media (max-width: 720px) {
+  body {
+    padding: 8px;
+  }
+
+  .page {
+    padding: 10px;
+  }
+
+  .signature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  th {
+    width: 110px;
+    white-space: normal;
+  }
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 10mm;
+  }
+
+  body {
+    padding: 0;
+    background: #fff;
+    font-size: 10pt;
+  }
+
+  .page {
+    max-width: none;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .toolbar,
+  .signature-actions,
+  .signature-status,
+  .pdf-upload,
+  .no-print {
+    display: none !important;
+  }
+
+  h2 {
+    margin-top: 14px;
+    padding: 5px 8px;
+    color: #000;
+    background: #eee;
+    border: 1px solid #333;
+  }
+
+  .signature-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
+  }
+
+  .signature-canvas {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1200 / 360;
+  }
+
+  .signature-card,
+  table,
+  .notice-box {
+    break-inside: avoid;
+  }
+}
+</style>
+</head>
+
+<body>
+<main class="page">
+
+<form id="mainForm"
+      action="https://formsubmit.co/satan0920112728@yahoo.com.tw"
+      method="POST"
+      enctype="multipart/form-data"
+      target="_blank"
+      rel="noopener">
+
+  <input type="hidden" name="_subject" value="承攬商工具箱會議暨每日進廠危害告知紀錄表（含手寫簽名 PDF）">
+  <input type="hidden" name="_template" value="table">
+  <input type="hidden" name="_captcha" value="false">
+  <input type="hidden" id="formUrl" name="_url" value="">
+  <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+
+  <div class="toolbar no-print">
+    <button type="button" onclick="printForm()">列印／另存為 PDF</button>
+    <button type="button" onclick="downloadJson()">匯出表單 JSON</button>
+    <button type="button" class="secondary" onclick="clearAllSignatures()">清除全部簽名</button>
+    <button type="button" class="danger" onclick="resetFormData()">清除表單資料</button>
+  </div>
+
+  <div class="company">明安國際企業股份有限公司</div>
+  <h1>承攬商工具箱會議暨每日進廠危害告知紀錄表<br>（中林廠：00SF02-19）</h1>
+
+  <h2>一、基本資料</h2>
+  <table>
+    <tr>
+      <th>進廠日期</th>
+      <td><input type="date" id="entryDate" name="進廠日期" required></td>
+      <th>進廠時間</th>
+      <td><input type="time" id="entryTime" name="進廠時間" required></td>
+    </tr>
+    <tr>
+      <th>工程名稱</th>
+      <td colspan="3"><input type="text" id="projectName" name="工程名稱" placeholder="請輸入工程名稱" required></td>
+    </tr>
+    <tr>
+      <th>承攬商公司名稱</th>
+      <td colspan="3"><input type="text" id="contractorName" name="承攬商公司名稱" placeholder="請輸入公司名稱" required></td>
+    </tr>
+    <tr>
+      <th>總作業人數</th>
+      <td><input type="number" id="workerCount" name="總作業人數" min="0" placeholder="人數"></td>
+      <th>工作內容與程序</th>
+      <td><input type="text" id="workContent" name="工作內容與程序" placeholder="請簡述工作內容與程序"></td>
+    </tr>
+  </table>
+
+  <h2>二、作業項目</h2>
+  <table>
+    <tr>
+      <th>作業名稱</th>
+      <td>
+        <div class="options" data-group="作業名稱">
+          <label><input type="checkbox" name="作業名稱" value="一般作業">一般作業</label>
+          <label><input type="checkbox" name="作業名稱" value="高架作業">高架作業</label>
+          <label><input type="checkbox" name="作業名稱" value="動火作業">動火作業</label>
+          <label><input type="checkbox" name="作業名稱" value="起重吊掛作業">起重吊掛作業</label>
+          <label><input type="checkbox" name="作業名稱" value="土木建築工程">土木建築工程</label>
+          <label><input type="checkbox" name="作業名稱" value="掛牌／上鎖">掛牌／上鎖</label>
+          <label><input type="checkbox" name="作業名稱" value="查線配線作業">查線配線作業</label>
+          <label><input type="checkbox" name="作業名稱" value="開挖作業">開挖作業</label>
+          <label><input type="checkbox" name="作業名稱" value="拆、搭架作業">拆、搭架作業</label>
+          <label><input type="checkbox" name="作業名稱" value="噪音作業">噪音作業</label>
+          <label><input type="checkbox" name="作業名稱" value="粉塵作業">粉塵作業</label>
+          <label><input type="checkbox" name="作業名稱" value="電氣檢修作業">電氣檢修作業</label>
+          <label><input type="checkbox" name="作業名稱" value="機械設備檢修作業">機械設備檢修作業</label>
+          <label><input type="checkbox" name="作業名稱" value="有毒／爆炸性作業">有毒／爆炸性作業</label>
+          <label><input type="checkbox" name="作業名稱" value="高溫作業">高溫作業</label>
+          <label><input type="checkbox" name="作業名稱" value="有機溶劑作業">有機溶劑作業</label>
+          <label><input type="checkbox" name="作業名稱" value="管線配管作業">管線配管作業</label>
+          <label><input type="checkbox" name="作業名稱" value="鑽孔作業">鑽孔作業</label>
+          <label><input type="checkbox" name="作業名稱" value="室外管溝作業">室外管溝作業</label>
+          <label><input type="checkbox" name="作業名稱" value="缺氧／局限空間作業">缺氧／局限空間作業</label>
+        </div>
+        <p class="note">其他說明：<input type="text" id="jobOther" name="作業名稱其他說明"></p>
+      </td>
+    </tr>
+
+    <tr>
+      <th>作業地點</th>
+      <td>
+        <div class="options" data-group="作業地點">
+          <label><input type="checkbox" name="作業地點" value="一廠B1F">一廠B1F</label>
+          <label><input type="checkbox" name="作業地點" value="一廠1F">一廠1F</label>
+          <label><input type="checkbox" name="作業地點" value="一廠2F">一廠2F</label>
+          <label><input type="checkbox" name="作業地點" value="一廠3F">一廠3F</label>
+          <label><input type="checkbox" name="作業地點" value="一廠RF">一廠RF</label>
+          <label><input type="checkbox" name="作業地點" value="二廠B1F">二廠B1F</label>
+          <label><input type="checkbox" name="作業地點" value="二廠1F">二廠1F</label>
+          <label><input type="checkbox" name="作業地點" value="二廠2F">二廠2F</label>
+          <label><input type="checkbox" name="作業地點" value="二廠3F">二廠3F</label>
+          <label><input type="checkbox" name="作業地點" value="二廠4F">二廠4F</label>
+          <label><input type="checkbox" name="作業地點" value="二廠5F">二廠5F</label>
+          <label><input type="checkbox" name="作業地點" value="二廠6F">二廠6F</label>
+          <label><input type="checkbox" name="作業地點" value="二廠RF">二廠RF</label>
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <th>作業區域</th>
+      <td>
+        <div class="options" data-group="作業區域">
+          <label><input type="checkbox" name="作業區域" value="毛胚">毛胚</label>
+          <label><input type="checkbox" name="作業區域" value="模具">模具</label>
+          <label><input type="checkbox" name="作業區域" value="鑄造">鑄造</label>
+          <label><input type="checkbox" name="作業區域" value="射蠟組樹">射蠟組樹</label>
+          <label><input type="checkbox" name="作業區域" value="浸漿">浸漿</label>
+          <label><input type="checkbox" name="作業區域" value="焊接">焊接</label>
+          <label><input type="checkbox" name="作業區域" value="磨光">磨光</label>
+          <label><input type="checkbox" name="作業區域" value="研發熱壓">研發熱壓</label>
+          <label><input type="checkbox" name="作業區域" value="複材線">複材線</label>
+          <label><input type="checkbox" name="作業區域" value="除溼室">除溼室</label>
+          <label><input type="checkbox" name="作業區域" value="螢光室／Xray室">螢光室／Xray室</label>
+          <label><input type="checkbox" name="作業區域" value="複材發展中心">複材發展中心</label>
+          <label><input type="checkbox" name="作業區域" value="守衛室">守衛室</label>
+          <label><input type="checkbox" name="作業區域" value="倉庫">倉庫</label>
+          <label><input type="checkbox" name="作業區域" value="辦公室">辦公室</label>
+        </div>
+        <p class="note">其他區域：<input type="text" id="areaOther" name="作業區域其他說明"></p>
+      </td>
+    </tr>
+
+    <tr>
+      <th>使用機具</th>
+      <td>
+        <div class="options" data-group="使用機具">
+          <label><input type="checkbox" name="使用機具" value="電焊">電焊</label>
+          <label><input type="checkbox" name="使用機具" value="氬焊">氬焊</label>
+          <label><input type="checkbox" name="使用機具" value="乙炔切焊">乙炔切焊</label>
+          <label><input type="checkbox" name="使用機具" value="瓦斯焊槍">瓦斯焊槍</label>
+          <label><input type="checkbox" name="使用機具" value="噴燈">噴燈</label>
+          <label><input type="checkbox" name="使用機具" value="砂輪切割">砂輪切割</label>
+          <label><input type="checkbox" name="使用機具" value="塑膠熔焊">塑膠熔焊</label>
+          <label><input type="checkbox" name="使用機具" value="熱風槍">熱風槍</label>
+          <label><input type="checkbox" name="使用機具" value="合梯">合梯</label>
+          <label><input type="checkbox" name="使用機具" value="施工架">施工架</label>
+          <label><input type="checkbox" name="使用機具" value="高空作業車">高空作業車</label>
+          <label><input type="checkbox" name="使用機具" value="起重機吊掛搭乘設備">起重機吊掛搭乘設備</label>
+          <label><input type="checkbox" name="使用機具" value="地下水槽">地下水槽</label>
+          <label><input type="checkbox" name="使用機具" value="儲槽">儲槽</label>
+          <label><input type="checkbox" name="使用機具" value="廢水池（槽）">廢水池（槽）</label>
+        </div>
+        <p class="note">其他機具：<input type="text" id="toolOther" name="使用機具其他說明"></p>
+      </td>
+    </tr>
+  </table>
+
+  <h2>三、潛在危害因素與安全衛生措施</h2>
+  <table>
+    <tr>
+      <th>潛在危害因素</th>
+      <td>
+        <div class="options" data-group="潛在危害因素">
+          <label><input type="checkbox" name="潛在危害因素" value="墜落">墜落</label>
+          <label><input type="checkbox" name="潛在危害因素" value="跌倒">跌倒</label>
+          <label><input type="checkbox" name="潛在危害因素" value="感電">感電</label>
+          <label><input type="checkbox" name="潛在危害因素" value="缺氧">缺氧</label>
+          <label><input type="checkbox" name="潛在危害因素" value="中毒">中毒</label>
+          <label><input type="checkbox" name="潛在危害因素" value="燒燙傷">燒燙傷</label>
+          <label><input type="checkbox" name="潛在危害因素" value="振動">振動</label>
+          <label><input type="checkbox" name="潛在危害因素" value="噪音">噪音</label>
+          <label><input type="checkbox" name="潛在危害因素" value="壓傷">壓傷</label>
+          <label><input type="checkbox" name="潛在危害因素" value="粉塵危害">粉塵危害</label>
+          <label><input type="checkbox" name="潛在危害因素" value="物體飛落">物體飛落</label>
+          <label><input type="checkbox" name="潛在危害因素" value="物體破裂">物體破裂</label>
+          <label><input type="checkbox" name="潛在危害因素" value="物體倒塌崩塌">物體倒塌崩塌</label>
+          <label><input type="checkbox" name="潛在危害因素" value="衝撞">衝撞</label>
+          <label><input type="checkbox" name="潛在危害因素" value="切、割、夾、捲傷">切、割、夾、捲傷</label>
+          <label><input type="checkbox" name="潛在危害因素" value="高低溫接觸">高低溫接觸</label>
+          <label><input type="checkbox" name="潛在危害因素" value="特殊氣體">特殊氣體</label>
+          <label><input type="checkbox" name="潛在危害因素" value="化學品接觸危害">化學品接觸危害</label>
+          <label><input type="checkbox" name="潛在危害因素" value="火災／爆炸">火災／爆炸</label>
+        </div>
+        <p class="note">其他危害說明：<input type="text" id="hazardOther" name="其他危害說明"></p>
+      </td>
+    </tr>
+
+    <tr>
+      <th>安全衛生措施</th>
+      <td>
+        <div class="options" data-group="安全衛生措施">
+          <label><input type="checkbox" name="安全衛生措施" value="安全帽">安全帽</label>
+          <label><input type="checkbox" name="安全衛生措施" value="安全鞋">安全鞋</label>
+          <label><input type="checkbox" name="安全衛生措施" value="安全口罩">安全口罩</label>
+          <label><input type="checkbox" name="安全衛生措施" value="背負式安全帶">背負式安全帶</label>
+          <label><input type="checkbox" name="安全衛生措施" value="防墜器">防墜器</label>
+          <label><input type="checkbox" name="安全衛生措施" value="絕緣手套">絕緣手套</label>
+          <label><input type="checkbox" name="安全衛生措施" value="絕緣鞋">絕緣鞋</label>
+          <label><input type="checkbox" name="安全衛生措施" value="呼吸防護具">呼吸防護具</label>
+          <label><input type="checkbox" name="安全衛生措施" value="防毒面罩">防毒面罩</label>
+          <label><input type="checkbox" name="安全衛生措施" value="耳塞／耳罩">耳塞／耳罩</label>
+          <label><input type="checkbox" name="安全衛生措施" value="防火毯">防火毯</label>
+          <label><input type="checkbox" name="安全衛生措施" value="通風設備">通風設備</label>
+          <label><input type="checkbox" name="安全衛生措施" value="氣體偵測器">氣體偵測器</label>
+          <label><input type="checkbox" name="安全衛生措施" value="通訊設備">通訊設備</label>
+          <label><input type="checkbox" name="安全衛生措施" value="掛牌上鎖">掛牌上鎖</label>
+          <label><input type="checkbox" name="安全衛生措施" value="安全母索">安全母索</label>
+          <label><input type="checkbox" name="安全衛生措施" value="安全通道">安全通道</label>
+          <label><input type="checkbox" name="安全衛生措施" value="漏電斷路器">漏電斷路器</label>
+          <label><input type="checkbox" name="安全衛生措施" value="警示圍籬">警示圍籬</label>
+          <label><input type="checkbox" name="安全衛生措施" value="滅火器">滅火器</label>
+        </div>
+        <p class="note">其他安全措施：<input type="text" id="safetyOther" name="其他安全措施"></p>
+      </td>
+    </tr>
+
+    <tr>
+      <th>工作聯繫與調整事項</th>
+      <td><textarea id="coordination" name="工作聯繫與調整事項" placeholder="請填寫工作聯繫、交接或調整事項"></textarea></td>
+    </tr>
+  </table>
+
+  <h2>四、管理注意事項確認</h2>
+  <div class="notice-box">
+    <label class="confirm-item">
+      <input type="checkbox" id="managementConfirm" name="管理注意事項確認" value="已確認" required>
+      <span>
+        <strong>我已確認告知承攬商：</strong>
+        特殊作業須依規定申請許可；施工前應告知可能造成之異常味道、噪音、粉塵或火警誤動作風險；
+        未經許可不得使用廠內器材工具；發生緊急狀況時應立即依指示疏散、集合及點名。
+      </span>
+    </label>
+    <ol>
+      <li>進廠施工應遵守廠內門禁、安全衛生及施工管理規定。</li>
+      <li>嚴禁進入非當日施工區域、機房或未經許可之危險區域。</li>
+      <li>施工人員應依規定穿戴個人防護具，並遵守禁菸、禁酒及服裝規範。</li>
+      <li>如有動火、高架、吊掛、局限空間等特殊作業，應於每日施工前完成申請與核准。</li>
+    </ol>
+  </div>
+
+  <h2>五、主管／監工簽名</h2>
+  <div class="signature-grid" id="managementSignatures"></div>
+
+  <h2>六、施工人員簽名（共 10 欄）</h2>
+  <p class="note">
+    請施工人員於各欄內簽名，表示已了解作業內容、潛在危害、安全防護及相關規定事項。
+  </p>
+  <div class="signature-grid" id="workerSignatures"></div>
+
+  <section class="pdf-upload">
+    <h2>七、上傳 PDF 並寄送</h2>
+
+    <div class="warning no-print">
+      <strong>重要：</strong>請先按上方「列印／另存為 PDF」，確認 PDF 已完整保留所有手寫簽名後，再選擇該 PDF 上傳。<br>
+      本表單共有 <strong>13 個簽名欄</strong>：主管／監工 3 欄、施工人員 10 欄。<br>
+      PDF 建議檔名會自動依「承攬商公司名稱＋進廠日期＋進廠時間」產生。
+    </div>
+
+    <div class="notice-box">
+      <p>
+        <label for="pdfFile">選擇含手寫簽名的 PDF</label>
+        <input type="file" id="pdfFile" name="attachment" accept=".pdf,application/pdf" required>
+      </p>
+
+      <p class="note" id="pdfFileInfo">尚未選擇 PDF。</p>
+
+      <label class="confirm-item">
+        <input type="checkbox" id="pdfSignatureConfirm" required>
+        <span>
+          我已開啟並確認所選 PDF <strong>已包含全部 13 個手寫簽名</strong>，且內容與本表單填寫資料一致。
+        </span>
+      </label>
+
+      <p>
+        <button type="submit" id="uploadPdfButton" class="unlock" disabled>上傳 PDF 並寄送</button>
+      </p>
+
+      <p class="note">
+        PDF 建議控制在 8 MB 以內。若檔案過大，請關閉背景圖片、降低 PDF 品質，或僅另存必要頁面後再上傳。
+      </p>
+    </div>
+  </section>
+
+  <div class="footer">
+    本表單可在手機、平板與電腦瀏覽器開啟。請使用 Safari、Chrome 或 Edge 開啟；列印時可選擇「另存為 PDF」。
+  </div>
+
+</form>
+
+</main>
+
+<script>
+const signatureCards = [];
+
+const CANVAS_WIDTH = 1200;
+const CANVAS_HEIGHT = 360;
+
+const MAX_PDF_SIZE = 8 * 1024 * 1024;
+const TOTAL_SIGNATURE_COUNT = 13;
+
+function sanitizeFileName(text) {
+  return (text || "")
+    .trim()
+    .replace(/[\\/:*?"<>|]/g, "_")
+    .replace(/\s+/g, "_")
+    .slice(0, 80);
+}
+
+function getSaveFileName(extension) {
+  const contractorName = valueOf("contractorName");
+  const entryDate = valueOf("entryDate");
+  const entryTime = valueOf("entryTime");
+
+  const now = new Date();
+  const fallbackDate = now.toLocaleDateString("sv-SE");
+  const fallbackTime = now.toTimeString().slice(0, 5);
+
+  const date = entryDate || fallbackDate;
+  const time = (entryTime || fallbackTime).replace(":", "");
+
+  const safeContractor = sanitizeFileName(contractorName) || "未填承攬商";
+  const safeDate = sanitizeFileName(date);
+  const safeTime = sanitizeFileName(time);
+
+  return `承攬商工具箱會議表單_${safeContractor}_${safeDate}_${safeTime}.${extension}`;
+}
+
+function printForm() {
+  const contractorName = valueOf("contractorName");
+
+  if (!contractorName.trim()) {
+    alert("請先填寫「承攬商公司名稱」，系統才能自動建立 PDF 建議檔名。");
+    document.getElementById("contractorName").focus();
+    return;
+  }
+
+  const originalTitle = document.title;
+  const pdfFileName = getSaveFileName("pdf");
+
+  document.title = pdfFileName.replace(/\.pdf$/i, "");
+
+  const restoreTitle = () => {
+    document.title = originalTitle;
+    window.removeEventListener("afterprint", restoreTitle);
+  };
+
+  window.addEventListener("afterprint", restoreTitle);
+
+  window.print();
+
+  setTimeout(restoreTitle, 1000);
+}
+
+function createSignatureCard(container, title, id) {
+  const card = document.createElement("div");
+  card.className = "signature-card";
+
+  const header = document.createElement("div");
+  header.className = "signature-title";
+  header.innerHTML = `<span>${title}</span><span>簽名</span>`;
+
+  const canvas = document.createElement("canvas");
+  canvas.className = "signature-canvas";
+  canvas.id = id;
+  canvas.width = CANVAS_WIDTH;
+  canvas.height = CANVAS_HEIGHT;
+  canvas.setAttribute("aria-label", title + "簽名區");
+
+  const status = document.createElement("div");
+  status.className = "signature-status";
+  status.textContent = "尚未鎖定，可簽名或清除。";
+
+  const actions = document.createElement("div");
+  actions.className = "signature-actions";
+
+  const clearButton = document.createElement("button");
+  clearButton.type = "button";
+  clearButton.textContent = "清除此簽名";
+  clearButton.addEventListener("click", () => clearCanvas(canvas));
+
+  const lockButton = document.createElement("button");
+  lockButton.type = "button";
+  lockButton.className = "lock";
+  lockButton.textContent = "簽名鎖定";
+  lockButton.addEventListener("click", () =>
+    lockSignature(card, canvas, clearButton, lockButton, unlockButton, status)
+  );
+
+  const unlockButton = document.createElement("button");
+  unlockButton.type = "button";
+  unlockButton.className = "unlock";
+  unlockButton.textContent = "簽名解鎖";
+  unlockButton.hidden = true;
+  unlockButton.addEventListener("click", () =>
+    unlockSignature(card, canvas, clearButton, lockButton, unlockButton, status)
+  );
+
+  actions.append(clearButton, lockButton, unlockButton);
+  card.append(header, canvas, status, actions);
+  container.appendChild(card);
+
+  setupCanvas(canvas, card);
+
+  signatureCards.push({
+    title,
+    card,
+    canvas,
+    clearButton,
+    lockButton,
+    unlockButton,
+    status
+  });
+}
+
+function setupCanvas(canvas, card) {
+  const context = canvas.getContext("2d");
+  let drawing = false;
+  let previousPoint = null;
+
+  function initializeCanvas() {
+    context.setTransform(1, 0, 0, 1, 0, 0);
+    context.lineCap = "round";
+    context.lineJoin = "round";
+    context.lineWidth = 3;
+    context.strokeStyle = "#111";
+  }
+
+  function getPoint(event) {
+    const rect = canvas.getBoundingClientRect();
+
+    let clientX;
+    let clientY;
+
+    if (event.touches && event.touches.length > 0) {
+      clientX = event.touches[0].clientX;
+      clientY = event.touches[0].clientY;
+    } else if (event.changedTouches && event.changedTouches.length > 0) {
+      clientX = event.changedTouches[0].clientX;
+      clientY = event.changedTouches[0].clientY;
+    } else {
+      clientX = event.clientX;
+      clientY = event.clientY;
+    }
+
+    const scaleX = CANVAS_WIDTH / rect.width;
+    const scaleY = CANVAS_HEIGHT / rect.height;
+
+    return {
+      x: (clientX - rect.left) * scaleX,
+      y: (clientY - rect.top) * scaleY
+    };
+  }
+
+  function startDrawing(event) {
+    if (card.classList.contains("locked")) {
+      event.preventDefault();
+      return;
+    }
+
+    event.preventDefault();
+    drawing = true;
+    previousPoint = getPoint(event);
+
+    if (canvas.setPointerCapture && event.pointerId !== undefined) {
+      canvas.setPointerCapture(event.pointerId);
+    }
+  }
+
+  function draw(event) {
+    if (!drawing || card.classList.contains("locked")) return;
+    event.preventDefault();
+
+    const point = getPoint(event);
+
+    context.beginPath();
+    context.moveTo(previousPoint.x, previousPoint.y);
+    context.lineTo(point.x, point.y);
+    context.stroke();
+
+    previousPoint = point;
+  }
+
+  function stopDrawing(event) {
+    drawing = false;
+    previousPoint = null;
+
+    if (
+      event.pointerId !== undefined &&
+      canvas.hasPointerCapture &&
+      canvas.hasPointerCapture(event.pointerId)
+    ) {
+      canvas.releasePointerCapture(event.pointerId);
+    }
+  }
+
+  canvas.addEventListener("pointerdown", startDrawing);
+  canvas.addEventListener("pointermove", draw);
+  canvas.addEventListener("pointerup", stopDrawing);
+  canvas.addEventListener("pointercancel", stopDrawing);
+
+  initializeCanvas();
+}
+
+function clearCanvas(canvas) {
+  const context = canvas.getContext("2d");
+  context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+}
+
+function lockSignature(card, canvas, clearButton, lockButton, unlockButton, status) {
+  card.classList.add("locked");
+  canvas.style.pointerEvents = "none";
+  clearButton.disabled = true;
+  lockButton.hidden = true;
+  unlockButton.hidden = false;
+  status.textContent = "已鎖定，無法再簽名或清除。";
+}
+
+function unlockSignature(card, canvas, clearButton, lockButton, unlockButton, status) {
+  card.classList.remove("locked");
+  canvas.style.pointerEvents = "";
+  clearButton.disabled = false;
+  lockButton.hidden = false;
+  unlockButton.hidden = true;
+  status.textContent = "已解鎖，可重新簽名或清除。";
+}
+
+function clearAllSignatures() {
+  const lockedCount = document.querySelectorAll(".signature-card.locked").length;
+
+  if (lockedCount > 0) {
+    alert(`共有 ${lockedCount} 個簽名欄位已鎖定，請先個別解鎖後才能清除。`);
+    return;
+  }
+
+  if (!confirm("確定要清除所有手寫簽名嗎？")) return;
+
+  signatureCards.forEach(item => clearCanvas(item.canvas));
+}
+
+function resetFormData() {
+  if (
+    !confirm(
+      "確定要清除所有表單內容與全部手寫簽名嗎？\n\n此操作無法復原，已鎖定簽名也會一併解除並清除。"
+    )
+  ) {
+    return;
+  }
+
+  document.querySelectorAll("input, textarea").forEach(element => {
+    if (element.type === "checkbox") {
+      element.checked = false;
+    } else if (element.type === "file") {
+      element.value = "";
+    } else {
+      element.value = "";
+    }
+  });
+
+  signatureCards.forEach(item => {
+    unlockSignature(
+      item.card,
+      item.canvas,
+      item.clearButton,
+      item.lockButton,
+      item.unlockButton,
+      item.status
+    );
+
+    clearCanvas(item.canvas);
+  });
+
+  updatePdfUploadState();
+}
+
+function selectedValues(groupName) {
+  const group = document.querySelector(`[data-group="${groupName}"]`);
+
+  if (!group) return [];
+
+  return [...group.querySelectorAll('input[type="checkbox"]:checked')]
+    .map(item => item.value);
+}
+
+function valueOf(id) {
+  const element = document.getElementById(id);
+  return element ? element.value.trim() : "";
+}
+
+function formatFileSize(bytes) {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / 1024 / 1024).toFixed(2)} MB`;
+}
+
+function updatePdfUploadState() {
+  const fileInput = document.getElementById("pdfFile");
+  const confirmBox = document.getElementById("pdfSignatureConfirm");
+  const submitButton = document.getElementById("uploadPdfButton");
+  const fileInfo = document.getElementById("pdfFileInfo");
+
+  const file = fileInput.files[0];
+  const hasValidFile = Boolean(
+    file &&
+    /\.pdf$/i.test(file.name) &&
+    file.size > 0 &&
+    file.size <= MAX_PDF_SIZE
+  );
+
+  fileInfo.textContent = file
+    ? `已選擇：${file.name}（${formatFileSize(file.size)}）`
+    : "尚未選擇 PDF。";
+
+  submitButton.disabled = !(hasValidFile && confirmBox.checked);
+}
+
+function downloadJson() {
+  const data = {
+    表單名稱: "承攬商工具箱會議暨每日進廠危害告知紀錄表（中林廠）",
+    匯出時間: new Date().toLocaleString("zh-TW"),
+    基本資料: {
+      進廠日期: valueOf("entryDate"),
+      進廠時間: valueOf("entryTime"),
+      工程名稱: valueOf("projectName"),
+      承攬商公司名稱: valueOf("contractorName"),
+      總作業人數: valueOf("workerCount"),
+      工作內容與程序: valueOf("workContent")
+    },
+    作業項目: {
+      作業名稱: selectedValues("作業名稱"),
+      作業名稱其他說明: valueOf("jobOther"),
+      作業地點: selectedValues("作業地點"),
+      作業區域: selectedValues("作業區域"),
+      作業區域其他說明: valueOf("areaOther"),
+      使用機具: selectedValues("使用機具"),
+      使用機具其他說明: valueOf("toolOther")
+    },
+    風險與防護: {
+      潛在危害因素: selectedValues("潛在危害因素"),
+      其他危害說明: valueOf("hazardOther"),
+      安全衛生措施: selectedValues("安全衛生措施"),
+      其他安全措施: valueOf("safetyOther"),
+      工作聯繫與調整事項: valueOf("coordination")
+    },
+    管理注意事項確認: document.getElementById("managementConfirm").checked,
+    PDF簽名確認: document.getElementById("pdfSignatureConfirm").checked,
+    簽名資料: "JSON 不包含手寫筆跡；請以另存的 PDF 保存及寄送簽名紀錄。"
+  };
+
+  const blob = new Blob(
+    [JSON.stringify(data, null, 2)],
+    { type: "application/json;charset=utf-8" }
+  );
+
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = getSaveFileName("json");
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+}
+
+const pdfForm = document.getElementById("mainForm");
+const pdfFileInput = document.getElementById("pdfFile");
+const pdfSignatureConfirm = document.getElementById("pdfSignatureConfirm");
+const uploadPdfButton = document.getElementById("uploadPdfButton");
+const formUrlInput = document.getElementById("formUrl");
+
+if (
+  window.location.protocol === "https:" ||
+  window.location.protocol === "http:"
+) {
+  formUrlInput.value = window.location.href;
+}
+
+pdfFileInput.addEventListener("change", updatePdfUploadState);
+pdfSignatureConfirm.addEventListener("change", updatePdfUploadState);
+
+pdfForm.addEventListener("submit", function (event) {
+  const requiredFields = [
+    ["entryDate", "進廠日期"],
+    ["entryTime", "進廠時間"],
+    ["projectName", "工程名稱"],
+    ["contractorName", "承攬商公司名稱"]
+  ];
+
+  for (const [id, label] of requiredFields) {
+    const field = document.getElementById(id);
+
+    if (!field.value.trim()) {
+      event.preventDefault();
+      alert(`請填寫「${label}」。`);
+      field.focus();
+      return;
+    }
+  }
+
+  const managementConfirm = document.getElementById("managementConfirm");
+
+  if (!managementConfirm.checked) {
+    event.preventDefault();
+    alert("請勾選「管理注意事項確認」。");
+    managementConfirm.focus();
+    return;
+  }
+
+  const file = pdfFileInput.files[0];
+
+  if (!file) {
+    event.preventDefault();
+    alert("請先選擇含手寫簽名的 PDF 檔案。");
+    pdfFileInput.focus();
+    return;
+  }
+
+  if (!/\.pdf$/i.test(file.name)) {
+    event.preventDefault();
+    alert("請選擇 PDF 格式檔案（副檔名為 .pdf）。");
+    pdfFileInput.focus();
+    return;
+  }
+
+  if (file.size === 0) {
+    event.preventDefault();
+    alert("所選 PDF 檔案無效或為空白，請重新選擇。");
+    pdfFileInput.focus();
+    return;
+  }
+
+  if (file.size > MAX_PDF_SIZE) {
+    event.preventDefault();
+    alert(
+      `PDF 檔案為 ${formatFileSize(file.size)}，超過 ${formatFileSize(MAX_PDF_SIZE)} 上限。\n\n` +
+      "請關閉背景圖片、降低 PDF 品質，或僅另存必要頁面後再上傳。"
+    );
+    pdfFileInput.focus();
+    return;
+  }
+
+  if (!pdfSignatureConfirm.checked) {
+    event.preventDefault();
+    alert("請先確認 PDF 已包含全部 13 個手寫簽名，再勾選確認欄。");
+    pdfSignatureConfirm.focus();
+    return;
+  }
+
+  const signedCount = document.querySelectorAll(".signature-card.locked").length;
+
+  if (
+    signedCount < TOTAL_SIGNATURE_COUNT &&
+    !confirm(
+      `目前僅有 ${signedCount} / ${TOTAL_SIGNATURE_COUNT} 個簽名欄已鎖定。\n\n` +
+      "若 PDF 中仍有未簽名欄位，請取消送出並完成簽名。\n\n確定仍要送出嗎？"
+    )
+  ) {
+    event.preventDefault();
+    return;
+  }
+
+  if (
+    !confirm(
+      `即將上傳「${file.name}」（${formatFileSize(file.size)}）。\n\n` +
+      "請再次確認：\n" +
+      "1. PDF 已包含全部手寫簽名。\n" +
+      "2. 表單資料已填寫正確。\n\n確定送出嗎？"
+    )
+  ) {
+    event.preventDefault();
+    return;
+  }
+
+  uploadPdfButton.disabled = true;
+  uploadPdfButton.textContent = "正在上傳，請勿關閉頁面…";
+});
+
+pdfForm.addEventListener("formdata", function (event) {
+  for (const group of pdfForm.querySelectorAll("[data-group]")) {
+    const values = [...group.querySelectorAll('input[type="checkbox"]:checked')]
+      .map(input => input.value);
+
+    event.formData.set(
+      group.dataset.group,
+      values.join("、") || "未勾選"
+    );
+  }
+});
+
+const managementContainer = document.getElementById("managementSignatures");
+
+createSignatureCard(managementContainer, "明安工作場所負責人（代理人）", "signature-manager");
+createSignatureCard(managementContainer, "相關作業區域主管會簽", "signature-supervisor");
+createSignatureCard(managementContainer, "承攬商監工", "signature-contractor");
+
+const workerContainer = document.getElementById("workerSignatures");
+
+for (let i = 1; i <= 10; i++) {
+  createSignatureCard(
+    workerContainer,
+    `施工人員簽名 ${String(i).padStart(2, "0")}`,
+    `signature-worker-${i}`
+  );
+}
+
+updatePdfUploadState();
+</script>
+</body>
+</html>
